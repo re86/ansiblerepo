@@ -1,0 +1,15 @@
+curl -vvv -X POST -d @admin_tab.xml -H "Content-Type: text/xml" http://re86:a25e9830c23dd609fc37dd8b58739bc9@192.168.2.207:8080/jenkins/createView?name=Admin-Tools
+curl -vvv -X POST -d @cidev_tab.xml -H "Content-Type: text/xml" http://re86:a25e9830c23dd609fc37dd8b58739bc9@192.168.2.207:8080/jenkins/createView?name=CI-DEV
+curl -vvv -X POST -d @cimas_tab.xml -H "Content-Type: text/xml" http://re86:a25e9830c23dd609fc37dd8b58739bc9@192.168.2.207:8080/jenkins/createView?name=CI-MAS
+curl -vvv -X POST -d @cirel_tab.xml -H "Content-Type: text/xml" http://re86:a25e9830c23dd609fc37dd8b58739bc9@192.168.2.207:8080/jenkins/createView?name=CI-REL
+curl -vvv -X POST -d @cicube_tab.xml -H "Content-Type: text/xml" http://re86:a25e9830c23dd609fc37dd8b58739bc9@192.168.2.207:8080/jenkins/createView?name=CCube
+curl -vvv -X POST -d @cidevbuildstatus_tab.xml -H "Content-Type: text/xml" http://re86:a25e9830c23dd609fc37dd8b58739bc9@192.168.2.207:8080/jenkins/createView?name=CI%20-%20DEV%20-%20Build%20Status
+curl -vvv -X POST -d @mobilebuildpipeline_tab.xml -H "Content-Type: text/xml" http://re86:a25e9830c23dd609fc37dd8b58739bc9@192.168.2.207:8080/jenkins/createView?name=Mobile-Build-Pipeline
+curl -vvv -X POST -d @mydashboard_tab.xml -H "Content-Type: text/xml" http://re86:a25e9830c23dd609fc37dd8b58739bc9@192.168.2.207:8080/jenkins/createView?name=My%20Dashboard
+curl -vvv -X POST -d @nightlybuilds_tab.xml -H "Content-Type: text/xml" http://re86:a25e9830c23dd609fc37dd8b58739bc9@192.168.2.207:8080/jenkins/createView?name=Nightly-Builds
+curl -vvv -X POST -d @ondemandbuilds_tab.xml -H "Content-Type: text/xml" http://re86:a25e9830c23dd609fc37dd8b58739bc9@192.168.2.207:8080/jenkins/createView?name=OnDemand-Builds
+curl -vvv -X POST -d @regressionjobs_tab.xml -H "Content-Type: text/xml" http://re86:a25e9830c23dd609fc37dd8b58739bc9@192.168.2.207:8080/jenkins/createView?name=Regression%20Jobs
+curl -vvv -X POST -d @regressionjobstatus_tab.xml -H "Content-Type: text/xml" http://re86:a25e9830c23dd609fc37dd8b58739bc9@192.168.2.207:8080/jenkins/createView?name=Regression%20Jobs%20Status
+curl -vvv -X POST -d @sanityjobs_tab.xml -H "Content-Type: text/xml" http://re86:a25e9830c23dd609fc37dd8b58739bc9@192.168.2.207:8080/jenkins/createView?name=Sanity%20Jobs
+curl -vvv -X POST -d @sanityjobstatus_tab.xml -H "Content-Type: text/xml" http://re86:a25e9830c23dd609fc37dd8b58739bc9@192.168.2.207:8080/jenkins/createView?name=Sanity%20Jobs%20Status
+curl -vvv -X POST -d @donotuse_tab.xml -H "Content-Type: text/xml" http://re86:a25e9830c23dd609fc37dd8b58739bc9@192.168.2.207:8080/jenkins/createView?name=DONOT%20USE

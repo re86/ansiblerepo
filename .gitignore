@@ -1,0 +1,3 @@
+#Ignore Mac files in folders
+**/.DS_Store
+**/*.log

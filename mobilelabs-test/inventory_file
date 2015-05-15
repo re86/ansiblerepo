@@ -1,0 +1,8 @@
+[webservers]
+#balaram-vm1
+#balaram-vm2
+balaram-vm3
+
+[appservers]
+#balaram-vm1
+#balaram-vm2

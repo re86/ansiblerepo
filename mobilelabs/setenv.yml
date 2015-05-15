@@ -1,0 +1,13 @@
+---
+# file: Variables to setup the jenkins installation
+http_port: 80
+max_clients: 200
+jenkins_version: 1.554
+master_home: Users/hscbuild01/ansible/mobilelabs
+jenkins_plugins: jenkins-plugins-121104.tar.gz
+jenkins_templates: jenkins-templates.tar.gz
+jenkins_jobs: jenkins-jobs.tar.gz
+jenkins_scripts: jenkins-scriptler.tar.gz
+ssh_keys: keys.tar.gz
+juser: tomcat7
+jgroup: tomcat7

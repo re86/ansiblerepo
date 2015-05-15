@@ -1,0 +1,19 @@
+---
+- name: testing module2
+  command: 'curl -vvv -X POST -d @/tmp/mygitrepo/views/{{item.name}} -H "Content-Type: text/xml" http://localhost:8080/jenkins/createView?name={{item.version}}'
+  with_items:
+   - { name: 'admin_tab.xml', version: 'Admin-Tools' }
+   - { name: 'cidev_tab.xml', version: 'CI-DEV' }
+   - { name: 'cimas_tab.xml', version: 'CI-MAS' }
+   - { name: 'cirel_tab.xml', version: 'CI-REL' }
+   - { name: 'cicube_tab.xml', version: 'CCube' }
+   - { name: 'cidevbuildstatus_tab.xml', version: 'CI%20-%20DEV%20-%20Build%20Status' }
+   - { name: 'mobilebuildpipeline_tab.xml', version: 'Mobile-Build-Pipeline' }
+   - { name: 'mydashboard_tab.xml', version: 'My%20Dashboard' }
+   - { name: 'nightlybuilds_tab.xml', version: 'Nightly-Builds' }
+   - { name: 'ondemandbuilds_tab.xml', version: 'OnDemand-Builds' }
+   - { name: 'regressionjobs_tab.xml', version: 'Regression%20Jobs' }
+   - { name: 'regressionjobstatus_tab.xml', version: 'Regression%20Jobs%20Status' }
+   - { name: 'sanityjobs_tab.xml', version: 'Sanity%20Jobs' }
+   - { name: 'sanityjobstatus_tab.xml', version: 'Sanity%20Jobs%20Status' }
+   - { name: 'donotuse_tab.xml', version: 'DONOT%20USE' }

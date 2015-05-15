@@ -1,0 +1,99 @@
+- hosts: webservers
+  sudo: yes
+  tasks:
+  - include_vars: setenv.yml
+
+  #Install git on destinations
+  - name: install git
+    sudo: yes
+    command: "apt-get -y install git"
+
+  #Install tomcat-dependency
+  - name: Install tomcat-dependency
+    apt: name={{ item }} state=present install_recommends=no
+    with_items:
+     - ant
+     - libtcnative-1
+
+  #Install Apache tomcat 
+  - name: install tomcat
+    sudo: yes
+    command: "apt-get -y install tomcat7"
+
+  #- name: Update server.xml
+  #  copy: src=./files/server.xml dest=/etc/tomcat7 owner=root group=tomcat7 backup=true
+
+  #Configure Tomcat
+  - name: setting up by port directory
+    sudo: yes
+    file: path=/etc/authbind/byport state=directory
+
+  - name: Set up port mappings for 443 and 80
+    sudo: yes
+    file: path=/etc/authbind/byport/{{ item }} state=touch mode=0500 owner=tomcat7 group=root
+    with_items:
+      - 80
+      - 443
+
+  - name: Enable AUTHBIND
+    sudo: yes
+    lineinfile: dest=/etc/default/tomcat7 line="AUTHBIND=yes" backup=yes
+
+  - name: Start tomcat to create directory structure
+    sudo: yes
+    service: name=tomcat7 state=restarted
+
+  #Download jenkins
+  #- action: get_url url=http://mirrors.jenkins-ci.org/war/{{jenkins_version}}/jenkins.war dest=/tmp/ mode=0777
+  #- raw: mv /tmp/jenkins.war /var/lib/tomcat7/webapps/
+  - name: Upload jenkins to host
+    copy:
+  #      src=/home/balaram/Downloads/jenkins.war
+  #      src=/Users/hscbuild01/ansible/mobile/jenkins.war
+        src=/{{master_home}}/jenkins.war
+        dest=/var/lib/tomcat7/webapps/jenkins.war
+        mode=0644
+
+  #Create jenkins directory on destination
+  - name: Create the /usr/share/tomcat7/.jenkins directory
+    file:
+        path=/usr/share/tomcat7/.jenkins/ owner={{juser}} group={{jgroup}} mode=0777 state=directory
+
+  - name: start tomcat to pickup and install Jenkins
+    service: name=tomcat7 state=started
+
+  - name: Create the directory for git repo
+    file:
+        path=/tmp/mygitrepo/ owner={{juser}} group={{jgroup}} mode=0777 state=directory
+
+  #Download configs from git repo
+  - name: Download jenkins config git repo
+    become: yes
+    become_user: balaram
+    git: 
+       repo=git@github.com:re86/jenkinsrepo.git
+       dest=/tmp/mygitrepo/
+       update=yes
+       accept_hostkey=yes
+
+  #Move job configs to jenkins
+  - raw: cp -R /tmp/mygitrepo/jobs/* /usr/share/tomcat7/.jenkins/jobs/
+  - raw: chown -R {{juser}}:{{jgroup}} /usr/share/tomcat7/.jenkins/jobs/*
+
+  #Download jenkins plugins
+  - name: Create plugin directory
+    file:
+        path=/tmp/jplugins mode=0777 state=directory
+
+  - action: get_url url=https://updates.jenkins-ci.org/download/plugins/{{item.name}}/{{item.version}}/{{item.name}}.hpi dest=/tmp/jplugins mode=0777
+    with_items:
+     - { name: 'build-monitor-plugin', version: '1.6+build.132' }
+     - { name: 'git', version: '2.3.1' }
+
+  #Move plugins configs to jenkins
+  - raw: mv /tmp/jplugins/* /usr/share/tomcat7/.jenkins/plugins/
+  - raw: chown -R {{juser}}:{{jgroup}} /usr/share/tomcat7/.jenkins/jobs/*
+
+  - name: ensure tomcat is restarted
+    sudo: yes
+    service: name=tomcat7 state=restarted

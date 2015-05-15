@@ -1,0 +1,18 @@
+---
+- include_vars: setenv.yml
+- name: Upload jenkins to host
+  copy:
+  #      src=/home/balaram/Downloads/jenkins.war
+  #      src=/Users/hscbuild01/ansible/mobile/jenkins.war
+      src=/{{master_files}}/jenkins.war
+      dest=/var/lib/tomcat7/webapps/jenkins.war
+      mode=0644
+
+  #Create jenkins directory on destination
+- name: Create the /usr/share/tomcat7/.jenkins directory
+  file:
+      path=/usr/share/tomcat7/.jenkins/ owner={{juser}} group={{jgroup}} mode=0777 state=directory
+
+- name: start tomcat
+  sudo: yes
+  service: name=tomcat7 state=restarted

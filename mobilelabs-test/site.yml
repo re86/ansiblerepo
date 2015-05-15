@@ -1,0 +1,17 @@
+---
+- hosts: webservers
+  #user: ubuntu
+  sudo: true
+  roles:
+  #- testing
+  - tomcat
+  - jenkins
+  - git
+  - jenkins_plugins
+  - jenkins_conf
+
+- hosts: appservers
+  #user: ubuntu
+  sudo: true
+  roles:
+  - nginx

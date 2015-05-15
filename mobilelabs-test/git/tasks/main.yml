@@ -1,0 +1,14 @@
+---
+  #Install git on destinations
+- name: install git
+  sudo: yes
+  command: "apt-get -y install git"
+
+# Update repositories cache and install "git" package
+#- apt: name=git update_cache=yes
+
+# Remove "git" package
+#- apt: name=git state=absent
+
+# Install the package "git"
+#- apt: name=git state=present

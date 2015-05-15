@@ -1,0 +1,25 @@
+---
+#Install Apache tomcat 
+- name: install tomcat
+  sudo: yes
+  command: "apt-get -y install tomcat7"
+
+- name: setting up by port directory
+  sudo: yes
+  file: path=/etc/authbind/byport state=directory
+  notify: start tomcat
+
+- name: Set up port mappings for 443 and 80
+  sudo: yes
+  file: path=/etc/authbind/byport/{{ item }} state=touch mode=0500 owner=tomcat7 group=root
+  with_items:
+    - 80
+    - 443
+
+- name: Enable AUTHBIND
+  sudo: yes
+  lineinfile: dest=/etc/default/tomcat7 line="AUTHBIND=yes" backup=yes
+
+- name: start tomcat
+  sudo: yes
+  service: name=tomcat7 state=restarted
